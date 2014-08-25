@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:example="http://schemas.android.com/apk/res/com.ti.sensortag" >
+    
+    <PreferenceCategory android:title="Sensors online" >
+        
+        <!-- 
+	        Checkboxes have keys that match (with a simple transformation) the enum names in Sensor.java for easy
+	        decoding/encoding between java code and xml. 
+        -->
+        <CheckBoxPreference
+            android:key="pref_simple_keys_on"
+            android:summary="Turn the Simple keys service on or off."
+            android:defaultValue="false"
+            android:persistent="true"
+            android:title="Simple keys" />
+        <CheckBoxPreference
+            android:key="pref_accelerometer_on"
+            android:summary="Turn the Accelerometer service on or off."
+            android:defaultValue="false"
+            android:persistent="true"
+            android:title="Accelerometer" />
+        <CheckBoxPreference
+            android:key="pref_magnetometer_on"
+            android:summary="Turn the Magnetometer service on or off."
+            android:defaultValue="false"
+            android:persistent="true"
+            android:title="Magnetometer" />
+        <CheckBoxPreference
+            android:key="pref_gyroscope_on"
+            android:summary="Turn the Gyroscope service on or off."
+            android:defaultValue="false"
+            android:persistent="true"
+            android:title="Gyroscope" />
+        <CheckBoxPreference
+            android:key="pref_euler_angle_on"
+            android:summary="Turn the Euler Angle service on or off."
+            android:defaultValue="true"
+            android:persistent="true"
+            android:title="Euler Angle" />
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="Sensor Module" >
+        <ListPreference
+            android:key="pref_select_sensormodule1"
+            android:summary="Select the position corresponding to SensorModule1" 
+            android:persistent="true"
+            android:entries="@array/sensor_position"
+            android:entryValues="@array/sensor_position_values"
+            android:title="SensorModule1"/>
+        <ListPreference
+            android:key="pref_select_sensormodule2"
+            android:summary="Select the position corresponding to SensorModule1" 
+            android:persistent="true"
+            android:entries="@array/sensor_position"
+            android:entryValues="@array/sensor_position_values"
+            android:title="SensorModule2"/>
+        <ListPreference
+            android:key="pref_select_sensormodule3"
+            android:summary="Select the position corresponding to SensorModule1" 
+            android:persistent="true"
+            android:entries="@array/sensor_position"
+            android:entryValues="@array/sensor_position_values"
+            android:title="SensorModule3"/>
+        <ListPreference
+            android:key="pref_select_sensormodule4"
+            android:summary="Select the position corresponding to SensorModule1" 
+            android:persistent="true"
+            android:entries="@array/sensor_position"
+            android:entryValues="@array/sensor_position_values"
+            android:title="SensorModule4"/>
+        <ListPreference
+            android:key="pref_select_sensormodule5"
+            android:summary="Select the position corresponding to SensorModule1" 
+            android:persistent="true"
+            android:entries="@array/sensor_position"
+            android:entryValues="@array/sensor_position_values"
+            android:title="SensorModule5"/>
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="Limb Length" >
+        <EditTextPreference
+                android:title="Upper Left Leg"
+                android:summary="Length of upper left leg in cm"
+                android:persistent="true"
+                android:inputType="number"
+                android:key="pref_edit_upper_left_leg"/>
+        <EditTextPreference
+                android:title="Lower Left Leg"
+                android:summary="Length of lower left leg in cm"
+                android:persistent="true"
+                android:inputType="number"
+                android:key="pref_edit_lower_left_leg"/>
+        <EditTextPreference
+                android:title="Upper Right Leg"
+                android:summary="Length of upper right leg in cm"
+                android:persistent="true"
+                android:inputType="number"
+                android:key="pref_edit_upper_right_leg"/>
+        <EditTextPreference
+                android:title="Lower Right Leg"
+                android:summary="Length of lower right leg in cm"
+                android:persistent="true"
+                android:inputType="number"
+                android:key="pref_edit_lower_right_leg"/>
+    </PreferenceCategory>
+</PreferenceScreen>
