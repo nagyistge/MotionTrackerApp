@@ -79,6 +79,7 @@ public class DeviceActivity extends ViewPagerActivity {
 	// UI
 	private DeviceView mDeviceView;
 	private StepView mStepView;
+	private Context context;
 
 	// BLE
 	private BluetoothLeService mBtLeService = null;
@@ -100,8 +101,13 @@ public class DeviceActivity extends ViewPagerActivity {
 	private Point3D lowerLeftLegData;
 	private Point3D upperRightLegData;
 	private Point3D lowerRightLegData;
+	private Point3D upperLeftLegError;
+	private Point3D lowerLeftLegError;
+	private Point3D upperRightLegError;
+	private Point3D lowerRightLegError;
 	private Point3D BodyData;
 	private boolean isRecording = false;
+	private boolean isCalibrating = false;
 	private double totalDistance = 0; // excluding current step length
 	private double stepLength = 0;
 	private double lastStepLength = 0;
@@ -135,6 +141,7 @@ public class DeviceActivity extends ViewPagerActivity {
 		// GUI
 		mDeviceView = new DeviceView();
 		mStepView = new StepView();
+		context = this;
 		mSectionsPagerAdapter.addSection(mDeviceView, "SensorModule");
 		mSectionsPagerAdapter.addSection(mStepView, "Overview");
 		mSectionsPagerAdapter.addSection(new HelpView("help_device.html",
@@ -154,12 +161,16 @@ public class DeviceActivity extends ViewPagerActivity {
 		lowerLeftLegData = new Point3D(90, 0, 0);
 		upperRightLegData = new Point3D(90, 0, 0);
 		lowerRightLegData = new Point3D(90, 0, 0);
+		upperLeftLegError = new Point3D(0, 0, 0);
+		lowerLeftLegError = new Point3D(0, 0, 0);
+		upperRightLegError = new Point3D(0, 0, 0);
+		lowerRightLegError = new Point3D(0, 0, 0);
 
 		// GATT database
 		Resources res = getResources();
 		XmlResourceParser xpp = res.getXml(R.xml.gatt_uuid);
 		new GattInfo(xpp);
-		
+
 		// Initialize sensor list
 		updateSensorList();
 	}
@@ -241,7 +252,7 @@ public class DeviceActivity extends ViewPagerActivity {
 		// Get Sensor Positions and Limb Length
 		getSensorPositions();
 		getLimbLengths();
-		
+
 		// Get Gatt List
 		mBluetoothGattList = BluetoothLeService.getBtGattList();
 
@@ -581,26 +592,34 @@ public class DeviceActivity extends ViewPagerActivity {
 							Toast.LENGTH_SHORT).show();
 				}
 			}
-			mDeviceView.onCharacteristicChanged(uuidStr, value, index);
+			// mDeviceView.onCharacteristicChanged(uuidStr, value, index);
 			if (uuidStr.equals(UUID_EUL_DATA.toString())) {
 				Point3D v = Sensor.EULER_ANGLE.convert(value);
 				if (mBluetoothDevicePositionList.get(index) == Position.UPPER_LEFT_LEG) {
-					upperLeftLegData = v;
+					upperLeftLegData = Point3D.subtract(v, upperLeftLegError);
+					mDeviceView.UpdateAngles(upperLeftLegData, index);
 				}
 				if (mBluetoothDevicePositionList.get(index) == Position.LOWER_LEFT_LEG) {
-					lowerLeftLegData = v;
+					lowerLeftLegData = Point3D.subtract(v, lowerLeftLegError);
+					mDeviceView.UpdateAngles(lowerLeftLegData, index);
 				}
 				if (mBluetoothDevicePositionList.get(index) == Position.UPPER_RIGHT_LEG) {
-					upperRightLegData = v;
+					upperRightLegData = Point3D.subtract(v, upperRightLegError);
+					mDeviceView.UpdateAngles(upperRightLegData, index);
 				}
 				if (mBluetoothDevicePositionList.get(index) == Position.LOWER_RIGHT_LEG) {
-					lowerRightLegData = v;
+					lowerRightLegData = Point3D.subtract(v, lowerRightLegError);
+					mDeviceView.UpdateAngles(lowerRightLegData, index);
 				}
 				if (mBluetoothDevicePositionList.get(index) == Position.BODY) {
 					BodyData = v;
+					mDeviceView.UpdateAngles(BodyData, index);
 				}
 				if (isRecording) {
 					UpdateSummary();
+				}
+				if (isCalibrating) {
+					Calibrate();
 				}
 			}
 
@@ -641,12 +660,24 @@ public class DeviceActivity extends ViewPagerActivity {
 		stepError = (upperLeftLegLength + lowerLeftLegLength)
 				* Math.cos(Math.toRadians(ANGULAR_ERROR));
 		leftStepping = false;
+		isCalibrating = false;
 		isRecording = true;
 	}
 
 	// Stop recording SensorModule data
 	public void stopRecording() {
 		isRecording = false;
+	}
+
+	public void startCalibration() {
+		if (isCalibrating) {
+			isCalibrating = false;
+			Toast.makeText(context, "Calibration Finished!", Toast.LENGTH_SHORT)
+					.show();
+		} else {
+			standingCount = 0;
+			isCalibrating = true;
+		}
 	}
 
 	// Calculate and update step summary
@@ -679,7 +710,9 @@ public class DeviceActivity extends ViewPagerActivity {
 				if (leftStepping == false) {
 					numberOfSteps++;
 					totalDistance = totalDistance + lastStepLength;
-					Log.d("Result", "NumberOfSteps = " + numberOfSteps + "\ntotalDistance = " + totalDistance + "\nlastStepLength = " + lastStepLength);
+					Log.d("Result", "NumberOfSteps = " + numberOfSteps
+							+ "\ntotalDistance = " + totalDistance
+							+ "\nlastStepLength = " + lastStepLength);
 					lastStepLength = 0;
 				}
 				stepLength = left - right;
@@ -689,7 +722,9 @@ public class DeviceActivity extends ViewPagerActivity {
 				if (leftStepping == true) {
 					numberOfSteps++;
 					totalDistance = totalDistance + lastStepLength;
-					Log.d("Result", "NumberOfSteps = " + numberOfSteps + "\ntotalDistance = " + totalDistance + "\nlastStepLength = " + lastStepLength);
+					Log.d("Result", "NumberOfSteps = " + numberOfSteps
+							+ "\ntotalDistance = " + totalDistance
+							+ "\nlastStepLength = " + lastStepLength);
 					lastStepLength = 0;
 				}
 				stepLength = right - left;
@@ -700,7 +735,9 @@ public class DeviceActivity extends ViewPagerActivity {
 				if (standingCount > 100) {
 					numberOfSteps++;
 					totalDistance = totalDistance + lastStepLength;
-					Log.d("Result", "NumberOfSteps = " + numberOfSteps + "\ntotalDistance = " + totalDistance + "\nlastStepLength = " + lastStepLength);
+					Log.d("Result", "NumberOfSteps = " + numberOfSteps
+							+ "\ntotalDistance = " + totalDistance
+							+ "\nlastStepLength = " + lastStepLength);
 					lastStepLength = 0;
 					walkingState = 0;
 				}
@@ -712,5 +749,39 @@ public class DeviceActivity extends ViewPagerActivity {
 		}
 
 		mStepView.UpdateSummary(totalDistance, stepLength, numberOfSteps);
+	}
+
+	private void Calibrate() {
+		// Assume all sensors are at default angles (90, 0, x)
+		// Average over 500 recordings, find position error
+
+		// upperLeftLeg
+		upperLeftLegError.x = (upperLeftLegError.x * standingCount + (upperLeftLegData.x - 90))
+				/ standingCount;
+		upperLeftLegError.y = (upperLeftLegError.y * standingCount + (upperLeftLegData.y - 0))
+				/ standingCount;
+		// lowerLeftLeg
+		lowerLeftLegError.x = (lowerLeftLegError.x * standingCount + (lowerLeftLegData.x - 90))
+				/ standingCount;
+		lowerLeftLegError.y = (lowerLeftLegError.y * standingCount + (lowerLeftLegData.y - 0))
+				/ standingCount;
+		// upperRightLeg
+		upperRightLegError.x = (upperRightLegError.x * standingCount + (upperRightLegData.x - 90))
+				/ standingCount;
+		upperRightLegError.y = (upperRightLegError.y * standingCount + (upperRightLegData.y - 0))
+				/ standingCount;
+		// lowerRightLeg
+		lowerRightLegError.x = (lowerRightLegError.x * standingCount + (lowerRightLegData.x - 90))
+				/ standingCount;
+		lowerRightLegError.y = (lowerRightLegError.y * standingCount + (lowerRightLegData.y - 0))
+				/ standingCount;
+
+		standingCount++;
+		if (standingCount >= 500) {
+			isCalibrating = false;
+			Toast.makeText(context, "Calibration Finished!", Toast.LENGTH_SHORT)
+					.show();
+			return;
+		}
 	}
 }

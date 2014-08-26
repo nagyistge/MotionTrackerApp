@@ -26,6 +26,15 @@
             android:gravity="center_horizontal|center"
             android:linksClickable="false"
             android:text="Stop" />
+        
+        <Button
+            android:id="@+id/btn_calibrate"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:fadingEdge="vertical"
+            android:gravity="center_horizontal|center"
+            android:linksClickable="false"
+            android:text="Calibrate" />
     </LinearLayout>
 
     <TableLayout

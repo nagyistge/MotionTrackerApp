@@ -25,6 +25,7 @@ public class StepView extends Fragment {
 	private TextView mSummaryValues;
 	private Button mStartButton;
 	private Button mStopButton;
+	private Button mCalibrateButton;
 	private DecimalFormat decimal = new DecimalFormat("+0.00;-0.00");
 
 	@Override
@@ -51,6 +52,7 @@ public class StepView extends Fragment {
 		mPosition = (TextView) view.findViewById(R.id.SensorModule5_position);
 		mPositions.add(mPosition);
 		mSummaryValues = (TextView) view.findViewById(R.id.summaryTxt);
+		
 		mStartButton = (Button) view.findViewById(R.id.btn_start);
 		mStartButton.setOnClickListener(new OnClickListener() {
 
@@ -66,6 +68,15 @@ public class StepView extends Fragment {
 			@Override
 			public void onClick(View arg0) {
 				mActivity.stopRecording();
+			}
+			
+		});
+		mCalibrateButton = (Button) view.findViewById(R.id.btn_calibrate);
+		mCalibrateButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				mActivity.startCalibration();
 			}
 			
 		});

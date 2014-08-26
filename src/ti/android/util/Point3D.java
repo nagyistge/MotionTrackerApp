@@ -77,4 +77,15 @@ public class Point3D {
       return false;
     return true;
   }
+  
+  // a - b
+  public static Point3D subtract(Point3D a, Point3D b) {
+	  Point3D result = new Point3D(0, 0, 0);
+	  
+	  result.x = a.x - b.x;
+	  result.y = a.y - b.y;
+	  result.z = a.z - b.z;
+	  
+	  return result;
+  }
 }

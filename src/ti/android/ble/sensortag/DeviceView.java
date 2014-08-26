@@ -206,7 +206,7 @@ public class DeviceView extends Fragment {
 					+ decimal.format(v.z) + "\n";
 			mGyrValue.setText(msg);
 		}
-
+/*
 		if (uuidStr.equals(UUID_EUL_DATA.toString())) {
 			v = Sensor.EULER_ANGLE.convert(rawValue);
 			msg = decimal.format(v.x) + "\n" + decimal.format(v.y) + "\n"
@@ -214,7 +214,7 @@ public class DeviceView extends Fragment {
 			if (mEulValues != null) {
 				mEulValues.get(index).setText(msg);
 			}
-		}
+		}*/
 
 		if (uuidStr.equals(UUID_KEY_DATA.toString())) {
 			SimpleKeysStatus s;
@@ -239,6 +239,14 @@ public class DeviceView extends Fragment {
 			}
 
 			mButton.setImageResource(img);
+		}
+	}
+	
+	public void UpdateAngles(Point3D v, int index) {
+		String msg = decimal.format(v.x) + "\n" + decimal.format(v.y) + "\n"
+				+ decimal.format(v.z) + "\n";
+		if (mEulValues != null) {
+			mEulValues.get(index).setText(msg);
 		}
 	}
 
