@@ -596,20 +596,35 @@ public class DeviceActivity extends ViewPagerActivity {
 			if (uuidStr.equals(UUID_EUL_DATA.toString())) {
 				Point3D v = Sensor.EULER_ANGLE.convert(value);
 				if (mBluetoothDevicePositionList.get(index) == Position.UPPER_LEFT_LEG) {
+					if (isCalibrating) {
+						Calibrate(Position.UPPER_LEFT_LEG, v);
+					}
 					upperLeftLegData = Point3D.subtract(v, upperLeftLegError);
 					mDeviceView.UpdateAngles(upperLeftLegData, index);
+
 				}
 				if (mBluetoothDevicePositionList.get(index) == Position.LOWER_LEFT_LEG) {
+					if (isCalibrating) {
+						Calibrate(Position.LOWER_LEFT_LEG, v);
+					}
 					lowerLeftLegData = Point3D.subtract(v, lowerLeftLegError);
 					mDeviceView.UpdateAngles(lowerLeftLegData, index);
 				}
 				if (mBluetoothDevicePositionList.get(index) == Position.UPPER_RIGHT_LEG) {
+					if (isCalibrating) {
+						Calibrate(Position.UPPER_RIGHT_LEG, v);
+					}
 					upperRightLegData = Point3D.subtract(v, upperRightLegError);
 					mDeviceView.UpdateAngles(upperRightLegData, index);
+
 				}
 				if (mBluetoothDevicePositionList.get(index) == Position.LOWER_RIGHT_LEG) {
+					if (isCalibrating) {
+						Calibrate(Position.LOWER_RIGHT_LEG, v);
+					}
 					lowerRightLegData = Point3D.subtract(v, lowerRightLegError);
 					mDeviceView.UpdateAngles(lowerRightLegData, index);
+
 				}
 				if (mBluetoothDevicePositionList.get(index) == Position.BODY) {
 					BodyData = v;
@@ -617,9 +632,6 @@ public class DeviceActivity extends ViewPagerActivity {
 				}
 				if (isRecording) {
 					UpdateSummary();
-				}
-				if (isCalibrating) {
-					Calibrate();
 				}
 			}
 
@@ -751,30 +763,39 @@ public class DeviceActivity extends ViewPagerActivity {
 		mStepView.UpdateSummary(totalDistance, stepLength, numberOfSteps);
 	}
 
-	private void Calibrate() {
+	private void Calibrate(int position, Point3D v) {
 		// Assume all sensors are at default angles (90, 0, x)
 		// Average over 500 recordings, find position error
 
-		// upperLeftLeg
-		upperLeftLegError.x = (upperLeftLegError.x * standingCount + (upperLeftLegData.x - 90))
-				/ standingCount;
-		upperLeftLegError.y = (upperLeftLegError.y * standingCount + (upperLeftLegData.y - 0))
-				/ standingCount;
-		// lowerLeftLeg
-		lowerLeftLegError.x = (lowerLeftLegError.x * standingCount + (lowerLeftLegData.x - 90))
-				/ standingCount;
-		lowerLeftLegError.y = (lowerLeftLegError.y * standingCount + (lowerLeftLegData.y - 0))
-				/ standingCount;
-		// upperRightLeg
-		upperRightLegError.x = (upperRightLegError.x * standingCount + (upperRightLegData.x - 90))
-				/ standingCount;
-		upperRightLegError.y = (upperRightLegError.y * standingCount + (upperRightLegData.y - 0))
-				/ standingCount;
-		// lowerRightLeg
-		lowerRightLegError.x = (lowerRightLegError.x * standingCount + (lowerRightLegData.x - 90))
-				/ standingCount;
-		lowerRightLegError.y = (lowerRightLegError.y * standingCount + (lowerRightLegData.y - 0))
-				/ standingCount;
+		switch (position) {
+		case Position.UPPER_LEFT_LEG:
+			// upperLeftLeg
+			upperLeftLegError.x = (upperLeftLegError.x * standingCount + (v.x - 90))
+					/ (standingCount + 1);
+			upperLeftLegError.y = (upperLeftLegError.y * standingCount + (v.y - 0))
+					/ (standingCount + 1);
+			break;
+		case Position.LOWER_LEFT_LEG:
+			// lowerLeftLeg
+			lowerLeftLegError.x = (lowerLeftLegError.x * standingCount + (v.x - 90))
+					/ (standingCount + 1);
+			lowerLeftLegError.y = (lowerLeftLegError.y * standingCount + (v.y - 0))
+					/ (standingCount + 1);
+			break;
+		case Position.UPPER_RIGHT_LEG:
+			// upperRightLeg
+			upperRightLegError.x = (upperRightLegError.x * standingCount + (v.x - 90))
+					/ (standingCount + 1);
+			upperRightLegError.y = (upperRightLegError.y * standingCount + (v.y - 0))
+					/ (standingCount + 1);
+			break;
+		case Position.LOWER_RIGHT_LEG:
+			// lowerRightLeg
+			lowerRightLegError.x = (lowerRightLegError.x * standingCount + (v.x - 90))
+					/ (standingCount + 1);
+			lowerRightLegError.y = (lowerRightLegError.y * standingCount + (v.y - 0))
+					/ (standingCount + 1);
+		}
 
 		standingCount++;
 		if (standingCount >= 500) {

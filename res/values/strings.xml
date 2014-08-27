@@ -27,8 +27,8 @@
     
     <string-array name="sensor_position">
         <item>Upper Left Leg</item>
-        <item>Upper Right Leg</item>
         <item>Lower Left Leg</item>
+        <item>Upper Right Leg</item>
         <item>Lower Right Leg</item>
         <item>Body</item>
     </string-array>

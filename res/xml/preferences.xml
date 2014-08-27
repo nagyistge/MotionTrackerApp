@@ -50,28 +50,28 @@
             android:title="SensorModule1"/>
         <ListPreference
             android:key="pref_select_sensormodule2"
-            android:summary="Select the position corresponding to SensorModule1" 
+            android:summary="Select the position corresponding to SensorModule2" 
             android:persistent="true"
             android:entries="@array/sensor_position"
             android:entryValues="@array/sensor_position_values"
             android:title="SensorModule2"/>
         <ListPreference
             android:key="pref_select_sensormodule3"
-            android:summary="Select the position corresponding to SensorModule1" 
+            android:summary="Select the position corresponding to SensorModule3" 
             android:persistent="true"
             android:entries="@array/sensor_position"
             android:entryValues="@array/sensor_position_values"
             android:title="SensorModule3"/>
         <ListPreference
             android:key="pref_select_sensormodule4"
-            android:summary="Select the position corresponding to SensorModule1" 
+            android:summary="Select the position corresponding to SensorModule4" 
             android:persistent="true"
             android:entries="@array/sensor_position"
             android:entryValues="@array/sensor_position_values"
             android:title="SensorModule4"/>
         <ListPreference
             android:key="pref_select_sensormodule5"
-            android:summary="Select the position corresponding to SensorModule1" 
+            android:summary="Select the position corresponding to SensorModule5" 
             android:persistent="true"
             android:entries="@array/sensor_position"
             android:entryValues="@array/sensor_position_values"
