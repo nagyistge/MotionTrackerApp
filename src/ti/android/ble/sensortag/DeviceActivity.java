@@ -37,6 +37,7 @@ package ti.android.ble.sensortag;
 import static ti.android.ble.sensortag.SensorTag.UUID_EUL_DATA;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -45,7 +46,6 @@ import ti.android.ble.common.BluetoothLeService;
 import ti.android.ble.common.GattInfo;
 import ti.android.ble.common.HelpView;
 import ti.android.util.Point3D;
-import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
@@ -429,6 +429,7 @@ public class DeviceActivity extends ViewPagerActivity {
 				setStatus("Service discovery complete", index);
 			enableSensors(true, address);
 			enableNotifications(true, address);
+//			startReading(true, address);
 		} else {
 			setError("Failed to read services", index);
 		}
@@ -480,6 +481,21 @@ public class DeviceActivity extends ViewPagerActivity {
 			mBtLeService.waitIdle(GATT_TIMEOUT);
 		}
 	}
+
+//	private void startReading(boolean enable, String address) {
+//		BluetoothGatt mBtGatt = mBluetoothGattList
+//				.get(mBluetoothDeviceAddressList.indexOf(address));
+//		for (Sensor sensor : mEnabledSensors) {
+//			UUID servUuid = sensor.getService();
+//			UUID dataUuid = sensor.getData();
+//			BluetoothGattService serv = mBtGatt.getService(servUuid);
+//			BluetoothGattCharacteristic charac = serv
+//					.getCharacteristic(dataUuid);
+//
+//			mBtLeService.readCharacteristic(charac, address);
+//			mBtLeService.waitIdle(GATT_TIMEOUT);
+//		}
+//	}
 
 	void calibrateMagnetometer() {
 		Log.d(TAG, "calibrateMagnetometer");
@@ -593,6 +609,7 @@ public class DeviceActivity extends ViewPagerActivity {
 				}
 			}
 			// mDeviceView.onCharacteristicChanged(uuidStr, value, index);
+			long time = System.currentTimeMillis();
 			if (uuidStr.equals(UUID_EUL_DATA.toString())) {
 				Point3D v = Sensor.EULER_ANGLE.convert(value);
 				if (mBluetoothDevicePositionList.get(index) == Position.UPPER_LEFT_LEG) {
@@ -601,7 +618,9 @@ public class DeviceActivity extends ViewPagerActivity {
 					}
 					upperLeftLegData = Point3D.subtract(v, upperLeftLegError);
 					mDeviceView.UpdateAngles(upperLeftLegData, index);
-
+					Log.d("upperLeftLegData", "" + upperLeftLegData.x + ", "
+							+ upperLeftLegData.y + ", " + upperLeftLegData.z
+							+ ", " + time);
 				}
 				if (mBluetoothDevicePositionList.get(index) == Position.LOWER_LEFT_LEG) {
 					if (isCalibrating) {
@@ -609,6 +628,9 @@ public class DeviceActivity extends ViewPagerActivity {
 					}
 					lowerLeftLegData = Point3D.subtract(v, lowerLeftLegError);
 					mDeviceView.UpdateAngles(lowerLeftLegData, index);
+					Log.d("lowerLeftLegData", "" + lowerLeftLegData.x + ", "
+							+ lowerLeftLegData.y + ", " + lowerLeftLegData.z
+							+ ", " + time);
 				}
 				if (mBluetoothDevicePositionList.get(index) == Position.UPPER_RIGHT_LEG) {
 					if (isCalibrating) {
@@ -616,7 +638,9 @@ public class DeviceActivity extends ViewPagerActivity {
 					}
 					upperRightLegData = Point3D.subtract(v, upperRightLegError);
 					mDeviceView.UpdateAngles(upperRightLegData, index);
-
+					Log.d("upperRightLegData", "" + upperRightLegData.x + ", "
+							+ upperRightLegData.y + ", " + upperRightLegData.z
+							+ ", " + time);
 				}
 				if (mBluetoothDevicePositionList.get(index) == Position.LOWER_RIGHT_LEG) {
 					if (isCalibrating) {
@@ -624,7 +648,9 @@ public class DeviceActivity extends ViewPagerActivity {
 					}
 					lowerRightLegData = Point3D.subtract(v, lowerRightLegError);
 					mDeviceView.UpdateAngles(lowerRightLegData, index);
-
+					Log.d("lowerRightLegData", "" + lowerRightLegData.x + ", "
+							+ lowerRightLegData.y + ", " + lowerRightLegData.z
+							+ ", " + time);
 				}
 				if (mBluetoothDevicePositionList.get(index) == Position.BODY) {
 					BodyData = v;
