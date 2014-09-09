@@ -58,7 +58,7 @@ import android.widget.TextView;
 public class ScanView extends Fragment {
   private static final String TAG = "ScanView";
   private final int SCAN_TIMEOUT = 10; // Seconds
-  private final int CONNECT_TIMEOUT = 10; // Seconds
+  private final int CONNECT_TIMEOUT = 30; // Seconds
   private MainActivity mActivity = null;
 
   private DeviceListAdapter mDeviceAdapter = null;

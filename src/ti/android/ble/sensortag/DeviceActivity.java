@@ -37,7 +37,6 @@ package ti.android.ble.sensortag;
 import static ti.android.ble.sensortag.SensorTag.UUID_EUL_DATA;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -57,6 +56,9 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
@@ -80,6 +82,7 @@ public class DeviceActivity extends ViewPagerActivity {
 	private DeviceView mDeviceView;
 	private StepView mStepView;
 	private Context context;
+	private Handler handler;
 
 	// BLE
 	private BluetoothLeService mBtLeService = null;
@@ -171,8 +174,15 @@ public class DeviceActivity extends ViewPagerActivity {
 		XmlResourceParser xpp = res.getXml(R.xml.gatt_uuid);
 		new GattInfo(xpp);
 
+		// Initialize handler
+		HandlerThread handlerThread = new HandlerThread("ht");
+		handlerThread.start();
+		Looper looper = handlerThread.getLooper();
+		handler = new Handler(looper);
+
 		// Initialize sensor list
 		updateSensorList();
+
 	}
 
 	@Override
@@ -214,7 +224,8 @@ public class DeviceActivity extends ViewPagerActivity {
 		Log.d(TAG, "onResume");
 		super.onResume();
 		if (!mIsReceiving) {
-			registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
+			registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter(),
+					null, handler);
 			mIsReceiving = true;
 		}
 	}
@@ -270,6 +281,57 @@ public class DeviceActivity extends ViewPagerActivity {
 					displayServices(i);
 			}
 		}
+
+		// Start updating UI every 0.1 seconds
+		(new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				while (!Thread.interrupted())
+					try {
+						Thread.sleep(100);
+						runOnUiThread(new Runnable() // start actions in UI
+														// thread
+						{
+
+							@Override
+							public void run() {
+								int index = 0;
+								if (mBluetoothDevicePositionList
+										.contains(Position.UPPER_LEFT_LEG)) {
+									index = mBluetoothDevicePositionList
+											.indexOf(Position.UPPER_LEFT_LEG);
+									mDeviceView.UpdateAngles(upperLeftLegData,
+											index);
+								}
+								if (mBluetoothDevicePositionList
+										.contains(Position.LOWER_LEFT_LEG)) {
+									index = mBluetoothDevicePositionList
+											.indexOf(Position.LOWER_LEFT_LEG);
+									mDeviceView.UpdateAngles(lowerLeftLegData,
+											index);
+								}
+								if (mBluetoothDevicePositionList
+										.contains(Position.UPPER_RIGHT_LEG)) {
+									index = mBluetoothDevicePositionList
+											.indexOf(Position.UPPER_RIGHT_LEG);
+									mDeviceView.UpdateAngles(upperRightLegData,
+											index);
+								}
+								if (mBluetoothDevicePositionList
+										.contains(Position.LOWER_RIGHT_LEG)) {
+									index = mBluetoothDevicePositionList
+											.indexOf(Position.LOWER_RIGHT_LEG);
+									mDeviceView.UpdateAngles(lowerRightLegData,
+											index);
+								}
+							}
+						});
+					} catch (InterruptedException e) {
+						// ooops
+					}
+			}
+		})).start(); // the while thread will start in BG thread
 	}
 
 	//
@@ -381,23 +443,6 @@ public class DeviceActivity extends ViewPagerActivity {
 		startActivityForResult(i, PREF_ACT_REQ);
 	}
 
-	private void checkOad() {
-		// Check if OAD is supported (needs OAD and Connection Control service)
-		mOadService = null;
-		mConnControlService = null;
-
-		for (int i = 0; i < mServiceList.size()
-				&& (mOadService == null || mConnControlService == null); i++) {
-			BluetoothGattService srv = mServiceList.get(i);
-			if (srv.getUuid().equals(GattInfo.OAD_SERVICE_UUID)) {
-				mOadService = srv;
-			}
-			if (srv.getUuid().equals(GattInfo.CC_SERVICE_UUID)) {
-				mConnControlService = srv;
-			}
-		}
-	}
-
 	private void discoverServices(int index) {
 		BluetoothGatt mBtGatt = mBluetoothGattList.get(index);
 
@@ -427,9 +472,9 @@ public class DeviceActivity extends ViewPagerActivity {
 		if (mServicesRdy) {
 			if (index == 0)
 				setStatus("Service discovery complete", index);
-			enableSensors(true, address);
+			// enableSensors(true, address);
 			enableNotifications(true, address);
-//			startReading(true, address);
+			// startReading(true, address);
 		} else {
 			setError("Failed to read services", index);
 		}
@@ -482,20 +527,20 @@ public class DeviceActivity extends ViewPagerActivity {
 		}
 	}
 
-//	private void startReading(boolean enable, String address) {
-//		BluetoothGatt mBtGatt = mBluetoothGattList
-//				.get(mBluetoothDeviceAddressList.indexOf(address));
-//		for (Sensor sensor : mEnabledSensors) {
-//			UUID servUuid = sensor.getService();
-//			UUID dataUuid = sensor.getData();
-//			BluetoothGattService serv = mBtGatt.getService(servUuid);
-//			BluetoothGattCharacteristic charac = serv
-//					.getCharacteristic(dataUuid);
-//
-//			mBtLeService.readCharacteristic(charac, address);
-//			mBtLeService.waitIdle(GATT_TIMEOUT);
-//		}
-//	}
+	// private void startReading(boolean enable, String address) {
+	// BluetoothGatt mBtGatt = mBluetoothGattList
+	// .get(mBluetoothDeviceAddressList.indexOf(address));
+	// for (Sensor sensor : mEnabledSensors) {
+	// UUID servUuid = sensor.getService();
+	// UUID dataUuid = sensor.getData();
+	// BluetoothGattService serv = mBtGatt.getService(servUuid);
+	// BluetoothGattCharacteristic charac = serv
+	// .getCharacteristic(dataUuid);
+	//
+	// mBtLeService.readCharacteristic(charac, address);
+	// mBtLeService.waitIdle(GATT_TIMEOUT);
+	// }
+	// }
 
 	void calibrateMagnetometer() {
 		Log.d(TAG, "calibrateMagnetometer");
@@ -518,7 +563,7 @@ public class DeviceActivity extends ViewPagerActivity {
 			if (!mIsReceiving) {
 				mIsReceiving = true;
 				registerReceiver(mGattUpdateReceiver,
-						makeGattUpdateIntentFilter());
+						makeGattUpdateIntentFilter(), null, handler);
 			}
 			updateSensorList();
 			for (int i = 0; i < mBluetoothDeviceAddressList.size(); i++) {
@@ -558,7 +603,6 @@ public class DeviceActivity extends ViewPagerActivity {
 					.equals(action)) {
 				if (status == BluetoothGatt.GATT_SUCCESS) {
 					displayServices(index);
-					checkOad();
 				} else {
 					Toast.makeText(getApplication(),
 							"Service discovery failed", Toast.LENGTH_LONG)
@@ -612,12 +656,14 @@ public class DeviceActivity extends ViewPagerActivity {
 			long time = System.currentTimeMillis();
 			if (uuidStr.equals(UUID_EUL_DATA.toString())) {
 				Point3D v = Sensor.EULER_ANGLE.convert(value);
+				if (mBluetoothDevicePositionList.size() <= index) {
+					return;
+				}
 				if (mBluetoothDevicePositionList.get(index) == Position.UPPER_LEFT_LEG) {
 					if (isCalibrating) {
 						Calibrate(Position.UPPER_LEFT_LEG, v);
 					}
 					upperLeftLegData = Point3D.subtract(v, upperLeftLegError);
-					mDeviceView.UpdateAngles(upperLeftLegData, index);
 					Log.d("upperLeftLegData", "" + upperLeftLegData.x + ", "
 							+ upperLeftLegData.y + ", " + upperLeftLegData.z
 							+ ", " + time);
@@ -627,7 +673,7 @@ public class DeviceActivity extends ViewPagerActivity {
 						Calibrate(Position.LOWER_LEFT_LEG, v);
 					}
 					lowerLeftLegData = Point3D.subtract(v, lowerLeftLegError);
-					mDeviceView.UpdateAngles(lowerLeftLegData, index);
+					// mDeviceView.UpdateAngles(lowerLeftLegData, index);
 					Log.d("lowerLeftLegData", "" + lowerLeftLegData.x + ", "
 							+ lowerLeftLegData.y + ", " + lowerLeftLegData.z
 							+ ", " + time);
@@ -637,7 +683,7 @@ public class DeviceActivity extends ViewPagerActivity {
 						Calibrate(Position.UPPER_RIGHT_LEG, v);
 					}
 					upperRightLegData = Point3D.subtract(v, upperRightLegError);
-					mDeviceView.UpdateAngles(upperRightLegData, index);
+					// mDeviceView.UpdateAngles(upperRightLegData, index);
 					Log.d("upperRightLegData", "" + upperRightLegData.x + ", "
 							+ upperRightLegData.y + ", " + upperRightLegData.z
 							+ ", " + time);
@@ -647,7 +693,7 @@ public class DeviceActivity extends ViewPagerActivity {
 						Calibrate(Position.LOWER_RIGHT_LEG, v);
 					}
 					lowerRightLegData = Point3D.subtract(v, lowerRightLegError);
-					mDeviceView.UpdateAngles(lowerRightLegData, index);
+					// mDeviceView.UpdateAngles(lowerRightLegData, index);
 					Log.d("lowerRightLegData", "" + lowerRightLegData.x + ", "
 							+ lowerRightLegData.y + ", " + lowerRightLegData.z
 							+ ", " + time);
@@ -831,4 +877,5 @@ public class DeviceActivity extends ViewPagerActivity {
 			return;
 		}
 	}
+
 }

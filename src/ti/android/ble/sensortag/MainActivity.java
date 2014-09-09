@@ -550,12 +550,12 @@ public class MainActivity extends ViewPagerActivity {
 				stopDeviceActivity();
 				if (status == BluetoothGatt.GATT_SUCCESS) {
 					setBusy(false);
+					mNumDeviceConnected--;
 					mScanView.setStatus(mBluetoothDevice.getName()
 							+ " disconnected", STATUS_DURATION);
 				} else {
 					setError("Disconnect failed. Status: " + status);
 				}
-				mNumDeviceConnected--;
 				// mBluetoothLeService.close();
 			} else {
 				Log.w(TAG, "Unknown action: " + action);
