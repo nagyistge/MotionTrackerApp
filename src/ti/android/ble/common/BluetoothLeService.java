@@ -403,7 +403,8 @@ public class BluetoothLeService extends Service {
 			return false;
 
 		if (enable) {
-			Log.i(TAG, "enable notification for index " + index + "address " + address);
+			Log.i(TAG, "enable notification for index " + index + "address "
+					+ address);
 			clientConfig
 					.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
 		} else {
@@ -477,12 +478,17 @@ public class BluetoothLeService extends Service {
 			// We want to directly connect to the device, so we are setting the
 			// autoConnect parameter to false.
 			Log.d(TAG, "Create a new GATT connection.");
-			BluetoothGatt mBluetoothGatt = device.connectGatt(this, false, mGattCallbacks);
-			mBluetoothGattList.add(mBluetoothGatt);
-			mBluetoothDeviceAddress = address;
-			mBluetoothDeviceAddressList.add(address);
-			mBluetoothDeviceNameList.add(device.getName());
-			mNumActiveConnections++;
+			BluetoothGatt mBluetoothGatt = device.connectGatt(this, false,
+					mGattCallbacks);
+			if (mBluetoothGatt != null) {
+				mBluetoothGattList.add(mBluetoothGatt);
+				mBluetoothDeviceAddress = address;
+				mBluetoothDeviceAddressList.add(address);
+				mBluetoothDeviceNameList.add(device.getName());
+				mNumActiveConnections++;
+			} else {
+				Log.w(TAG, "Failed to connect: " + address); 
+			}
 		} else {
 			Log.w(TAG, "Attempt to connect in state: " + connectionState);
 			return false;
@@ -554,11 +560,11 @@ public class BluetoothLeService extends Service {
 	public static List<BluetoothGatt> getBtGattList() {
 		return mThis.mBluetoothGattList;
 	}
-	
+
 	public static List<String> getBluetoothDeviceAddressList() {
 		return mThis.mBluetoothDeviceAddressList;
 	}
-	
+
 	public static List<String> getBluetoothDeviceNameList() {
 		return mThis.mBluetoothDeviceNameList;
 	}
