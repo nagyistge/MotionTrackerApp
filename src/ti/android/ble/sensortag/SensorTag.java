@@ -42,27 +42,24 @@ public class SensorTag {
 
   public final static UUID 
   
-      UUID_ACC_SERV = fromString("f000aa10-0451-4000-b000-000000000000"),
-      UUID_ACC_DATA = fromString("f000aa11-0451-4000-b000-000000000000"),
-      UUID_ACC_CONF = fromString("f000aa12-0451-4000-b000-000000000000"), // 0: disable, 1: enable
-      UUID_ACC_PERI = fromString("f000aa13-0451-4000-b000-000000000000"), // Period in tens of milliseconds
+      UUID_ACC_SERV = fromString("0667c144-6bbf-4a6b-96d7-40e2233a5962"),
+      UUID_ACC_DATA = fromString("3bcea24f-99d5-44bd-b795-3cfdf6544c72"),
+      UUID_ACC_CONF = fromString("2c242d78-42e3-4d6a-9062-4e4643313e74"), // 0: disable, 1: enable
+      UUID_ACC_PERI = fromString("bfd7fcc8-6067-47bf-bfb1-47277b2f1e09"), // Period in milliseconds
 
-      UUID_MAG_SERV = fromString("f000aa30-0451-4000-b000-000000000000"),
-      UUID_MAG_DATA = fromString("f000aa31-0451-4000-b000-000000000000"),
-      UUID_MAG_CONF = fromString("f000aa32-0451-4000-b000-000000000000"), // 0: disable, 1: enable
-      UUID_MAG_PERI = fromString("f000aa33-0451-4000-b000-000000000000"), // Period in tens of milliseconds
+      UUID_MAG_SERV = fromString("44da6c78-dec0-4e2d-b55c-0197ec007dfa"),
+      UUID_MAG_DATA = fromString("a1c0be45-9d95-4512-ab3a-6b304b8e4bab"),
+      UUID_MAG_CONF = fromString("bb96d47f-2b43-4c8a-93c4-7e87def53763"), // 0: disable, 1: enable
+      UUID_MAG_PERI = fromString("a9a2add5-11a5-4978-a0c4-37106f9ce89f"), // Period in milliseconds
 
-      UUID_GYR_SERV = fromString("f000aa50-0451-4000-b000-000000000000"), 
-      UUID_GYR_DATA = fromString("f000aa51-0451-4000-b000-000000000000"),
-      UUID_GYR_CONF = fromString("f000aa52-0451-4000-b000-000000000000"), // 0: disable, bit 0: enable x, bit 1: enable y, bit 2: enable z
-      UUID_GYR_PERI = fromString("f000aa53-0451-4000-b000-000000000000"), // Period in tens of milliseconds
-
-      UUID_KEY_SERV = fromString("0000ffe0-0000-1000-8000-00805f9b34fb"), 
-      UUID_KEY_DATA = fromString("0000ffe1-0000-1000-8000-00805f9b34fb"),
+      UUID_GYR_SERV = fromString("35950f04-747c-47d9-a5f4-14405e57885f"), 
+      UUID_GYR_DATA = fromString("4f9284c5-639f-4a07-b4e0-0c516989028c"),
+      UUID_GYR_CONF = fromString("5adef8ca-fc1a-42b0-a7b8-428825d2ac8f"), // 0: disable, bit 0: enable x, bit 1: enable y, bit 2: enable z
+      UUID_GYR_PERI = fromString("7027e6c5-dd93-4990-a090-e74a7a4ab021"), // Period in milliseconds
 
       UUID_EUL_SERV = fromString("4297b65e-1218-4d07-a203-9c1413b26430"), 
       UUID_EUL_DATA = fromString("41c590ce-154b-46b8-9892-db4edd6a8ca6"),
       UUID_EUL_CONF = fromString("6cd98885-babe-4733-bfaf-0fe5da52d9ed"), // 0: disable, bit 0: enable x, bit 1: enable y, bit 2: enable z
-      UUID_EUL_PERI = fromString("5ff9210a-0ec0-4c8b-aa88-7418a740bf6b"); // Period in tens of milliseconds;
+      UUID_EUL_PERI = fromString("5ff9210a-0ec0-4c8b-aa88-7418a740bf6b"); // Period in milliseconds;
   
 }

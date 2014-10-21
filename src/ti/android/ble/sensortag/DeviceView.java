@@ -34,14 +34,8 @@
  **************************************************************************************************/
 package ti.android.ble.sensortag;
 
-import static ti.android.ble.sensortag.R.drawable.buttonsoffoff;
-import static ti.android.ble.sensortag.R.drawable.buttonsoffon;
-import static ti.android.ble.sensortag.R.drawable.buttonsonoff;
-import static ti.android.ble.sensortag.R.drawable.buttonsonon;
 import static ti.android.ble.sensortag.SensorTag.UUID_ACC_DATA;
-import static ti.android.ble.sensortag.SensorTag.UUID_EUL_DATA;
 import static ti.android.ble.sensortag.SensorTag.UUID_GYR_DATA;
-import static ti.android.ble.sensortag.SensorTag.UUID_KEY_DATA;
 import static ti.android.ble.sensortag.SensorTag.UUID_MAG_DATA;
 
 import java.text.DecimalFormat;
@@ -56,7 +50,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -68,11 +61,10 @@ public class DeviceView extends Fragment {
 
 	// Sensor table; the iD corresponds to row number
 	private static final int ID_OFFSET = 0;
-	private static final int ID_KEY = 0;
-	private static final int ID_ACC = 1;
-	private static final int ID_MAG = 2;
-	private static final int ID_GYR = 3;
-	private static final int ID_EUL = 4;
+	private static final int ID_ACC = 0;
+	private static final int ID_MAG = 1;
+	private static final int ID_GYR = 2;
+	private static final int ID_EUL = 3;
 
 	public static DeviceView mInstance = null;
 
@@ -83,7 +75,6 @@ public class DeviceView extends Fragment {
 	private TextView mGyrValue;
 	private List<TextView> mEulValues;
 	private List<TextView> mNames;
-	private ImageView mButton;
 	private TextView mStatus;
 	private TableRow mMagPanel;
 	private int n;
@@ -91,7 +82,6 @@ public class DeviceView extends Fragment {
 	// House-keeping
 	private DecimalFormat decimal = new DecimalFormat("+0.00;-0.00");
 	private DeviceActivity mActivity;
-	private static final double PA_PER_METER = 12.0;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -111,7 +101,6 @@ public class DeviceView extends Fragment {
 		mAccValue = (TextView) view.findViewById(R.id.accelerometerTxt);
 		mMagValue = (TextView) view.findViewById(R.id.magnetometerTxt);
 		mGyrValue = (TextView) view.findViewById(R.id.gyroscopeTxt);
-		mButton = (ImageView) view.findViewById(R.id.buttons);
 		mStatus = (TextView) view.findViewById(R.id.status);
 
 		// UI widges of euler angle
@@ -216,30 +205,6 @@ public class DeviceView extends Fragment {
 			}
 		}*/
 
-		if (uuidStr.equals(UUID_KEY_DATA.toString())) {
-			SimpleKeysStatus s;
-			final int img;
-			s = Sensor.SIMPLE_KEYS.convertKeys(rawValue);
-
-			switch (s) {
-			case OFF_OFF:
-				img = buttonsoffoff;
-				break;
-			case OFF_ON:
-				img = buttonsoffon;
-				break;
-			case ON_OFF:
-				img = buttonsonoff;
-				break;
-			case ON_ON:
-				img = buttonsonon;
-				break;
-			default:
-				throw new UnsupportedOperationException();
-			}
-
-			mButton.setImageResource(img);
-		}
 	}
 	
 	public void UpdateAngles(Point3D v, int index) {
@@ -251,7 +216,6 @@ public class DeviceView extends Fragment {
 	}
 
 	void updateVisibility(int numModules) {
-		showItem(ID_KEY, mActivity.isEnabledByPrefs(Sensor.SIMPLE_KEYS));
 		showItem(ID_ACC, mActivity.isEnabledByPrefs(Sensor.ACCELEROMETER));
 		showItem(ID_MAG, mActivity.isEnabledByPrefs(Sensor.MAGNETOMETER));
 		showItem(ID_GYR, mActivity.isEnabledByPrefs(Sensor.GYROSCOPE));

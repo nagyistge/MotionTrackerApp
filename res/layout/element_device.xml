@@ -15,7 +15,7 @@
         android:contentDescription="image"
         android:focusable="false"
         android:paddingRight="15dp"
-        android:src="@drawable/sensortag" />
+        android:src="@drawable/ic_sensornode" />
 
     <TextView
         android:id="@+id/descr"

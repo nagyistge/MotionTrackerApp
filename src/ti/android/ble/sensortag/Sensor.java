@@ -44,8 +44,6 @@ import static ti.android.ble.sensortag.SensorTag.UUID_EUL_SERV;
 import static ti.android.ble.sensortag.SensorTag.UUID_GYR_CONF;
 import static ti.android.ble.sensortag.SensorTag.UUID_GYR_DATA;
 import static ti.android.ble.sensortag.SensorTag.UUID_GYR_SERV;
-import static ti.android.ble.sensortag.SensorTag.UUID_KEY_DATA;
-import static ti.android.ble.sensortag.SensorTag.UUID_KEY_SERV;
 import static ti.android.ble.sensortag.SensorTag.UUID_MAG_CONF;
 import static ti.android.ble.sensortag.SensorTag.UUID_MAG_DATA;
 import static ti.android.ble.sensortag.SensorTag.UUID_MAG_SERV;
@@ -109,20 +107,6 @@ public enum Sensor {
 			float z = shortSignedAtOffset(value, 4) * (500f / 65536f);
 
 			return new Point3D(x, y, z);
-		}
-	},
-
-	SIMPLE_KEYS(UUID_KEY_SERV, UUID_KEY_DATA, null) {
-		@Override
-		public SimpleKeysStatus convertKeys(final byte[] value) {
-			/*
-			 * The key state is encoded into 1 unsigned byte. bit 0 designates
-			 * the right key. bit 1 designates the left key. bit 2 designates
-			 * the side key.
-			 */
-			Integer encodedInteger = (int) value[0];
-
-			return SimpleKeysStatus.values()[encodedInteger % 4];
 		}
 	},
 
@@ -243,7 +227,7 @@ public enum Sensor {
 	}
 
 	public static final Sensor[] SENSOR_LIST = { ACCELEROMETER, MAGNETOMETER,
-			GYROSCOPE, SIMPLE_KEYS, EULER_ANGLE };
+			GYROSCOPE, EULER_ANGLE };
 
 	final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
 	public static String bytesToHex(byte[] bytes) {

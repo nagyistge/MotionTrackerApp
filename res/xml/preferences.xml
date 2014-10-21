@@ -9,12 +9,6 @@
 	        decoding/encoding between java code and xml. 
         -->
         <CheckBoxPreference
-            android:key="pref_simple_keys_on"
-            android:summary="Turn the Simple keys service on or off."
-            android:defaultValue="false"
-            android:persistent="true"
-            android:title="Simple keys" />
-        <CheckBoxPreference
             android:key="pref_accelerometer_on"
             android:summary="Turn the Accelerometer service on or off."
             android:defaultValue="false"

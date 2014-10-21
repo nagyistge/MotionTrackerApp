@@ -15,29 +15,6 @@
 
             <TextView
                 style="@style/ServiceHeaderItem"
-                android:text="@string/keys" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/keyPanel"
-            style="@style/ServiceRow" >
-
-            <TextView android:drawableLeft="@drawable/sensortag_simplekeys" />
-
-            <ImageView
-                android:id="@+id/buttons"
-                android:layout_height="wrap_content"
-                android:layout_span="2"
-                android:contentDescription="@string/image"
-                android:src="@drawable/buttonsoffoff" />
-
-            <TextView android:layout_span="1" />
-        </TableRow>
-
-        <TableRow style="@style/ServiceHeaderRow" >
-
-            <TextView
-                style="@style/ServiceHeaderItem"
                 android:text="@string/acc" />
         </TableRow>
 
@@ -45,7 +22,7 @@
             android:id="@+id/accPanel"
             style="@style/ServiceRow" >
 
-            <TextView android:drawableLeft="@drawable/accelerometer" />
+            <TextView android:drawableLeft="@drawable/ic_accelerometer" />
 
             <TextView
                 style="@style/ServiceItem"
@@ -72,7 +49,7 @@
             android:id="@+id/magPanel"
             style="@style/ServiceRow" >
 
-            <TextView android:drawableLeft="@drawable/sensortag_magnetometer" />
+            <TextView android:drawableLeft="@drawable/ic_magnetometer" />
 
             <TextView
                 style="@style/ServiceItem"
@@ -99,7 +76,7 @@
             android:id="@+id/gyrPanel"
             style="@style/ServiceRow" >
 
-            <TextView android:drawableLeft="@drawable/gyroscope" />
+            <TextView android:drawableLeft="@drawable/ic_gyroscope" />
 
             <TextView
                 style="@style/ServiceItem"
@@ -127,7 +104,7 @@
             android:id="@+id/eulPanel1"
             style="@style/ServiceRow" >
 
-            <TextView android:drawableLeft="@drawable/gyroscope" />
+            <TextView android:drawableLeft="@drawable/ic_eulerangle" />
 
             <TextView
                 style="@style/ServiceItem"
@@ -155,7 +132,7 @@
             android:id="@+id/eulPanel2"
             style="@style/ServiceRow" >
 
-            <TextView android:drawableLeft="@drawable/gyroscope" />
+            <TextView android:drawableLeft="@drawable/ic_eulerangle" />
 
             <TextView
                 style="@style/ServiceItem"
@@ -183,7 +160,7 @@
             android:id="@+id/eulPanel3"
             style="@style/ServiceRow" >
 
-            <TextView android:drawableLeft="@drawable/gyroscope" />
+            <TextView android:drawableLeft="@drawable/ic_eulerangle" />
 
             <TextView
                 style="@style/ServiceItem"
@@ -211,7 +188,7 @@
             android:id="@+id/eulPanel4"
             style="@style/ServiceRow" >
 
-            <TextView android:drawableLeft="@drawable/gyroscope" />
+            <TextView android:drawableLeft="@drawable/ic_eulerangle" />
 
             <TextView
                 style="@style/ServiceItem"
@@ -239,7 +216,7 @@
             android:id="@+id/eulPanel5"
             style="@style/ServiceRow" >
 
-            <TextView android:drawableLeft="@drawable/gyroscope" />
+            <TextView android:drawableLeft="@drawable/ic_eulerangle" />
 
             <TextView
                 style="@style/ServiceItem"

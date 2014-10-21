@@ -35,6 +35,7 @@
 package ti.android.ble.sensortag;
 
 import static ti.android.ble.sensortag.SensorTag.UUID_EUL_DATA;
+import static ti.android.ble.sensortag.SensorTag.UUID_ACC_DATA;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,8 +148,6 @@ public class DeviceActivity extends ViewPagerActivity {
 		context = this;
 		mSectionsPagerAdapter.addSection(mDeviceView, "SensorModule");
 		mSectionsPagerAdapter.addSection(mStepView, "Overview");
-		mSectionsPagerAdapter.addSection(new HelpView("help_device.html",
-				R.layout.fragment_help, R.id.webpage), "Help");
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
 		// BLE
@@ -324,7 +323,7 @@ public class DeviceActivity extends ViewPagerActivity {
 											.indexOf(Position.LOWER_RIGHT_LEG);
 									mDeviceView.UpdateAngles(lowerRightLegData,
 											index);
-								}
+								}								
 							}
 						});
 					} catch (InterruptedException e) {
@@ -654,8 +653,8 @@ public class DeviceActivity extends ViewPagerActivity {
 			}
 			// mDeviceView.onCharacteristicChanged(uuidStr, value, index);
 			long time = System.currentTimeMillis();
+			Point3D v = Sensor.EULER_ANGLE.convert(value);
 			if (uuidStr.equals(UUID_EUL_DATA.toString())) {
-				Point3D v = Sensor.EULER_ANGLE.convert(value);
 				if (mBluetoothDevicePositionList.size() <= index) {
 					return;
 				}
@@ -700,13 +699,15 @@ public class DeviceActivity extends ViewPagerActivity {
 				}
 				if (mBluetoothDevicePositionList.get(index) == Position.BODY) {
 					BodyData = v;
-					mDeviceView.UpdateAngles(BodyData, index);
 				}
 				if (isRecording) {
 					UpdateSummary();
 				}
+			} else if (uuidStr.equals(UUID_ACC_DATA.toString())) {
+				BodyData = v;
+				Log.d("BodyData", "" + BodyData.x + ", " + BodyData.y + ", "
+						+ BodyData.z + ", " + time);
 			}
-
 		}
 	}
 
