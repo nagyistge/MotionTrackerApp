@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_start"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:fadingEdge="vertical"
+            android:gravity="center_horizontal|center"
+            android:linksClickable="false"
+            android:text="Start" />
+
+        <Button
+            android:id="@+id/btn_stop"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:fadingEdge="vertical"
+            android:gravity="center_horizontal|center"
+            android:linksClickable="false"
+            android:text="Stop" />
+        
+        <Button
+            android:id="@+id/btn_calibrate"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:fadingEdge="vertical"
+            android:gravity="center_horizontal|center"
+            android:linksClickable="false"
+            android:text="Calibrate" />
+    </LinearLayout>
+
+    <TableLayout
+        android:id="@+id/step_overview_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:shrinkColumns="*"
+        android:stretchColumns="*" >
+
+        <TableRow style="@style/ServiceHeaderRow" >
+
+            <TextView
+                style="@style/ServiceHeaderItem"
+                android:text="Result Summary" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/SummaryPanel"
+            style="@style/ServiceRow" >
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="@string/result3" />
+
+            <TextView
+                android:id="@+id/summaryTxt"
+                style="@style/ServiceItemValue"
+                android:text="@string/empty3" />
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="@string/unitM3" />
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout
+        android:id="@+id/step_overview_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:shrinkColumns="*"
+        android:stretchColumns="*" >
+
+        <TableRow style="@style/ServiceHeaderRow" >
+
+            <TextView
+                style="@style/ServiceHeaderItem"
+                android:text="Sensor Position" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/positionPanel1"
+            style="@style/ServiceRow" >
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="SensorModule1" />
+
+            <TextView
+                android:id="@+id/SensorModule1_position"
+                style="@style/ServiceItemValue"
+                android:text="NULL" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/positionPanel2"
+            style="@style/ServiceRow" >
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="SensorModule2" />
+
+            <TextView
+                android:id="@+id/SensorModule2_position"
+                style="@style/ServiceItemValue"
+                android:text="NULL" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/positionPanel3"
+            style="@style/ServiceRow" >
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="SensorModule3" />
+
+            <TextView
+                android:id="@+id/SensorModule3_position"
+                style="@style/ServiceItemValue"
+                android:text="NULL" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/positionPanel4"
+            style="@style/ServiceRow" >
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="SensorModule4" />
+
+            <TextView
+                android:id="@+id/SensorModule4_position"
+                style="@style/ServiceItemValue"
+                android:text="NULL" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/positionPanel5"
+            style="@style/ServiceRow" >
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="SensorModule5" />
+
+            <TextView
+                android:id="@+id/SensorModule5_position"
+                style="@style/ServiceItemValue"
+                android:text="NULL" />
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout><!-- From: file:/C:/Users/lenovo/AndroidstudioProjects/MotionTrackerApp/app/src/main/res/layout/step_overview.xml -->

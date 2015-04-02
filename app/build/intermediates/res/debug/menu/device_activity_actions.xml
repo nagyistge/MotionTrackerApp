@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/opt_prefs"
+        android:title="@string/prefs"/>
+
+    <item
+        android:id="@+id/opt_about"
+        android:title="@string/about"/>
+
+</menu><!-- From: file:/C:/Users/lenovo/AndroidstudioProjects/MotionTrackerApp/app/src/main/res/menu/device_activity_actions.xml -->

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\lenovo\AndroidstudioProjects\MotionTrackerApp\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="8694693636ab36910c8100ce527c258ff3ebece0">
+        <dex dex="C:\Users\lenovo\AndroidstudioProjects\MotionTrackerApp\app\build\intermediates\pre-dexed\debug\classes-96d98579fe4944dc13a8f4618721d6d55f843e84.jar" />
+    </item>
+    <item
+        jar="C:\Users\lenovo\AndroidstudioProjects\MotionTrackerApp\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\libs\internal_impl-20.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d">
+        <dex dex="C:\Users\lenovo\AndroidstudioProjects\MotionTrackerApp\app\build\intermediates\pre-dexed\debug\internal_impl-20.0.0-19caa0ed8b45c4a838568743a711c6d5bd348142.jar" />
+    </item>
+    <item
+        jar="C:\Users\lenovo\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\20.0.0\support-annotations-20.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa">
+        <dex dex="C:\Users\lenovo\AndroidstudioProjects\MotionTrackerApp\app\build\intermediates\pre-dexed\debug\support-annotations-20.0.0-7d7803537438bd38e171d375766340d138743d03.jar" />
+    </item>
+
+</items>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="hao.motiontracker.main"
+    android:versionCode="6"
+    android:versionName="1.6" >
+
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
+
+    <uses-sdk
+        android:minSdkVersion="18"
+        android:targetSdkVersion="18" />
+    <uses-feature
+        android:name="android.hardware.bluetooth.ble"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="false"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name" 
+        android:theme="@android:style/Theme.Holo.Light">
+        <service
+            android:name="hao.motiontracker.ble.BluetoothLeService"
+            android:enabled="true" />
+
+        <activity
+            android:name="hao.motiontracker.main.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="hao.motiontracker.main.DeviceActivity"
+            android:parentActivityName="hao.motiontracker.main.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="hao.motiontracker.main.PreferencesActivity"
+            android:parentActivityName="hao.motiontracker.main.DeviceActivity"
+            android:screenOrientation="portrait"
+            android:label="Preferences"/>
+        
+    </application>
+
+
+</manifest>

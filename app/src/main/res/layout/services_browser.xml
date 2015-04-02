@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TableLayout
+        android:id="@+id/services_browser_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:shrinkColumns="*"
+        android:stretchColumns="*" >
+
+        <TableRow style="@style/ServiceHeaderRow" >
+
+            <TextView
+                style="@style/ServiceHeaderItem"
+                android:text="@string/acc" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/accPanel"
+            style="@style/ServiceRow" >
+
+            <TextView android:drawableLeft="@drawable/ic_accelerometer" />
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="@string/xyz3" />
+
+            <TextView
+                android:id="@+id/accelerometerTxt"
+                style="@style/ServiceItemValue"
+                android:text="@string/empty3" />
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="@string/unitG3" />
+        </TableRow>
+
+        <TableRow style="@style/ServiceHeaderRow" >
+
+            <TextView
+                style="@style/ServiceHeaderItem"
+                android:text="@string/mag" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/magPanel"
+            style="@style/ServiceRow" >
+
+            <TextView android:drawableLeft="@drawable/ic_magnetometer" />
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="@string/xyz3" />
+
+            <TextView
+                android:id="@+id/magnetometerTxt"
+                style="@style/ServiceItemValue"
+                android:text="@string/empty3" />
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="@string/unitT3" />
+        </TableRow>
+
+        <TableRow style="@style/ServiceHeaderRow" >
+
+            <TextView
+                style="@style/ServiceHeaderItem"
+                android:text="@string/gyro" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/gyrPanel"
+            style="@style/ServiceRow" >
+
+            <TextView android:drawableLeft="@drawable/ic_gyroscope" />
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="@string/xyz3" />
+
+            <TextView
+                android:id="@+id/gyroscopeTxt"
+                style="@style/ServiceItemValue"
+                android:text="@string/empty3" />
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="@string/unitDegSec3" />
+        </TableRow>
+
+        <TableRow style="@style/ServiceHeaderRow" >
+
+            <TextView
+                android:id="@+id/eulName1"
+                style="@style/ServiceHeaderItem"
+                android:text="SensorModule" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/eulPanel1"
+            style="@style/ServiceRow" >
+
+            <TextView android:drawableLeft="@drawable/ic_eulerangle" />
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="@string/xyz3" />
+
+            <TextView
+                android:id="@+id/eulerTxt1"
+                style="@style/ServiceItemValue"
+                android:text="@string/empty3" />
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="@string/unitDeg3" />
+        </TableRow>
+
+        <TableRow style="@style/ServiceHeaderRow" >
+
+            <TextView
+                android:id="@+id/eulName2"
+                style="@style/ServiceHeaderItem"
+                android:text="SensorModule" />
+        </TableRow>
+        
+        <TableRow
+            android:id="@+id/eulPanel2"
+            style="@style/ServiceRow" >
+
+            <TextView android:drawableLeft="@drawable/ic_eulerangle" />
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="@string/xyz3" />
+
+            <TextView
+                android:id="@+id/eulerTxt2"
+                style="@style/ServiceItemValue"
+                android:text="@string/empty3" />
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="@string/unitDeg3" />
+        </TableRow>
+
+        <TableRow style="@style/ServiceHeaderRow" >
+
+            <TextView
+                android:id="@+id/eulName3"
+                style="@style/ServiceHeaderItem"
+                android:text="SensorModule" />
+        </TableRow>
+        
+        <TableRow
+            android:id="@+id/eulPanel3"
+            style="@style/ServiceRow" >
+
+            <TextView android:drawableLeft="@drawable/ic_eulerangle" />
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="@string/xyz3" />
+
+            <TextView
+                android:id="@+id/eulerTxt3"
+                style="@style/ServiceItemValue"
+                android:text="@string/empty3" />
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="@string/unitDeg3" />
+        </TableRow>
+
+        <TableRow style="@style/ServiceHeaderRow" >
+
+            <TextView
+                android:id="@+id/eulName4"
+                style="@style/ServiceHeaderItem"
+                android:text="SensorModule" />
+        </TableRow>
+        
+        <TableRow
+            android:id="@+id/eulPanel4"
+            style="@style/ServiceRow" >
+
+            <TextView android:drawableLeft="@drawable/ic_eulerangle" />
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="@string/xyz3" />
+
+            <TextView
+                android:id="@+id/eulerTxt4"
+                style="@style/ServiceItemValue"
+                android:text="@string/empty3" />
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="@string/unitDeg3" />
+        </TableRow>
+
+        <TableRow style="@style/ServiceHeaderRow" >
+
+            <TextView
+                android:id="@+id/eulName5"
+                style="@style/ServiceHeaderItem"
+                android:text="SensorModule" />
+        </TableRow>
+        
+        <TableRow
+            android:id="@+id/eulPanel5"
+            style="@style/ServiceRow" >
+
+            <TextView android:drawableLeft="@drawable/ic_eulerangle" />
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="@string/xyz3" />
+
+            <TextView
+                android:id="@+id/eulerTxt5"
+                style="@style/ServiceItemValue"
+                android:text="@string/empty3" />
+
+            <TextView
+                style="@style/ServiceItem"
+                android:text="@string/unitDeg3" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/statusPanel"
+            style="@style/ServiceRow" >
+
+            <TextView
+                android:id="@+id/status"
+                style="@style/statusStyle"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_span="4"
+                android:gravity="center"
+                android:textSize="12sp" />
+        </TableRow>
+    </TableLayout>
+
+</ScrollView>
